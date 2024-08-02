@@ -1,0 +1,78 @@
+#region//movimento
+key_right = keyboard_check(ord("D"))
+key_left  = keyboard_check(ord("A"))
+key_jump = keyboard_check_pressed(vk_space)
+key_walk = keyboard_check(vk_shift)
+
+var move = key_right - key_left
+
+hsp = move * walksp;
+
+vsp = vsp + grv;
+
+if place_meeting(x,y+1,OPAUREDE) and key_jump
+{
+	vsp -= 20
+}
+
+if key_walk
+{
+	walksp =3
+}
+else
+{
+	walksp =7
+}
+#endregion
+#region //walljump
+if (place_meeting(x+hsp,y,OPAUREDE)) and (key_jump)
+{
+ vsp = -18;
+}
+#endregion
+#region //animaçaozinha de virar
+if keyboard_check(ord("A"))
+{
+	image_xscale = -3.1
+}
+if keyboard_check(ord("D"))
+{
+	image_xscale = 3.1
+}
+#endregion
+#region //colisão
+
+if place_meeting(x+hsp,y,OPAUREDE)
+{
+while(!place_meeting(x+sign(hsp),y,OPAUREDE))
+{
+	x=x+sign(hsp)
+}
+hsp = 0
+}
+x=x+hsp;
+
+if place_meeting(x,y+vsp,OPAUREDE)
+{
+while(!place_meeting(x,y+sign(vsp),OPAUREDE))
+{
+	y=y+sign(vsp)
+}
+vsp = 0
+}
+y=y+vsp;
+#endregion
+#region //animação
+
+else image_speed = 1;
+{
+	if (hsp == 0) 
+{
+	sprite_index = sMauricio
+}
+	else 
+{
+	sprite_index = sMauricio_Corrreno
+}
+}
+//incompleto
